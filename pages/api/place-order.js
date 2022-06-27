@@ -65,7 +65,7 @@ export default async (req, res) => {
           <p>${city}</p>
           <p>${state}</p>
           <p>${zip}</p>
-          <>${country}</p>
+          <p>${country}</p>
           <p>Products to ship</p>
           <p>______________________________</p>
           ${cartItemsHtml}
