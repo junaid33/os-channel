@@ -1,4 +1,5 @@
 import { createTransport, getTestMessageUrl } from "nodemailer";
+
 export default async (req, res) => {
   const {
     accessToken,
