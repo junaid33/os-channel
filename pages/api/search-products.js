@@ -1,9 +1,9 @@
-import Cors from 'cors';
+import Cors from "cors";
 
 function initMiddleware(middleware) {
   return (req, res) =>
     new Promise((resolve, reject) => {
-      middleware(req, res, result => {
+      middleware(req, res, (result) => {
         if (result instanceof Error) {
           return reject(result);
         }
@@ -14,8 +14,8 @@ function initMiddleware(middleware) {
 
 const cors = initMiddleware(
   Cors({
-    methods: ['GET', 'POST', 'OPTIONS'],
-    origin: "*"
+    methods: ["GET", "POST", "OPTIONS"],
+    origin: "*",
   })
 );
 
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 
   const { accessToken, searchEntry, productId, variantId } = req.query;
   if (process.env.ACCESS_TOKEN && process.env.ACCESS_TOKEN !== accessToken) {
-    res.status(400).json({ error: "Denied" });
+    return res.status(400).json({ error: "Denied" });
   }
   const allProducts = [
     {
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
     const products = allProducts.filter((product) =>
       product.title.includes(searchEntry)
     );
-    res.status(200).json({ products });
+    return res.status(200).json({ products });
   }
   if (productId && variantId) {
     const products = allProducts.filter(
@@ -48,9 +48,9 @@ export default async function handler(req, res) {
         product.productId === productId && product.variantId === variantId
     );
     if (products.length > 0) {
-      res.status(200).json({ products });
+      return res.status(200).json({ products });
     }
-    res.status(400).json({ error: "Not found" });
+    return res.status(400).json({ error: "Not found" });
   }
-  res.status(200).json({ products: allProducts });
+  return res.status(200).json({ products: allProducts });
 }
