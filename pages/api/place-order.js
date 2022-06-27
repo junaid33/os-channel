@@ -1,32 +1,6 @@
 import { createTransport, getTestMessageUrl } from "nodemailer";
-import Cors from "cors";
-
-function initMiddleware(middleware) {
-  return (req, res) =>
-    new Promise((resolve, reject) => {
-      middleware(req, res, (result) => {
-        if (result instanceof Error) {
-          return reject(result);
-        }
-        return resolve(result);
-      });
-    });
-}
-
-const cors = initMiddleware(
-  Cors({
-    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-    origin:
-    process.env.NODE_ENV === 'production'
-      ? ['https://omega.openship.org']
-      : 'http://localhost:3000',
-    optionsSuccessStatus: 200,
-  })
-);
 
 export default async (req, res) => {
-  await cors(req, res);
-
   const {
     accessToken,
     email,
