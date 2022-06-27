@@ -28,7 +28,7 @@ export default async function handler(req, res) {
   }
   const allProducts = [
     {
-      image: "https://example.com/book.jpeg",
+      image: "https://images.pexels.com/photos/531844/pexels-photo-531844.jpeg?cs=srgb&dl=pexels-pixabay-531844.jpg&fm=jpg&h=120&w=100&fit=crop",
       title: "Pocket Book",
       productId: "887262",
       variantId: "0",
