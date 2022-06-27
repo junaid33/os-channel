@@ -15,8 +15,9 @@ function initMiddleware(middleware) {
 
 const cors = initMiddleware(
   Cors({
-    methods: ["GET", "POST", "OPTIONS"],
-    origin: [],
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200,
   })
 );
 
