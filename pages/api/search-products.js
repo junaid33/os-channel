@@ -15,7 +15,9 @@ function initMiddleware(middleware) {
 const cors = initMiddleware(
   Cors({
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-    origin: "*",
+    origin: process.env.NODE_ENV === 'production'
+    ? ['https://omega.openship.org']
+    : 'http://localhost:3000',
     optionsSuccessStatus: 200,
   })
 );
