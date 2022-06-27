@@ -1,6 +1,28 @@
+import Cors from "cors";
 import { createTransport, getTestMessageUrl } from "nodemailer";
 
+function initMiddleware(middleware) {
+  return (req, res) =>
+    new Promise((resolve, reject) => {
+      middleware(req, res, (result) => {
+        if (result instanceof Error) {
+          return reject(result);
+        }
+        return resolve(result);
+      });
+    });
+}
+
+const cors = initMiddleware(
+  Cors({
+    methods: ["GET", "POST", "OPTIONS"],
+    origin: "*",
+  })
+);
+
 export default async (req, res) => {
+  await cors(req, res);
+
   const {
     accessToken,
     email,
@@ -18,7 +40,7 @@ export default async (req, res) => {
     },
   } = req.body;
   if (process.env.ACCESS_TOKEN && process.env.ACCESS_TOKEN !== accessToken) {
-    res.status(400).json({ error: "Denied" });
+    return res.status(400).json({ error: "Denied" });
   }
   try {
     const newOrderId = Date.now().toString();
@@ -63,12 +85,12 @@ export default async (req, res) => {
       subject: `Order ${newOrderId}`,
       html,
     });
-    res.status(200).json({
+    return res.status(200).json({
       purchaseId: newOrderId,
       url: getTestMessageUrl(orderEmail),
     });
   } catch {
-    res.status(200).json({
+    return res.status(200).json({
       error: "Order creation failed.",
     });
   }
