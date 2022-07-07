@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 
   const { accessToken, searchEntry, productId, variantId } = req.query;
   if (process.env.ACCESS_TOKEN && process.env.ACCESS_TOKEN !== accessToken) {
-    return res.status(400).json({ error: "Denied" });
+    return res.status(403).json({ error: "Denied" });
   }
   const allProducts = [
     {

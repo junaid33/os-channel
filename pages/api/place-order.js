@@ -40,7 +40,7 @@ export default async (req, res) => {
     },
   } = req.body;
   if (process.env.ACCESS_TOKEN && process.env.ACCESS_TOKEN !== accessToken) {
-    return res.status(400).json({ error: "Denied" });
+    return res.status(403).json({ error: "Denied" });
   }
   try {
     const newOrderId = Date.now().toString();
@@ -90,7 +90,7 @@ export default async (req, res) => {
       url: getTestMessageUrl(orderEmail),
     });
   } catch {
-    return res.status(200).json({
+    return res.status(400).json({
       error: "Order creation failed.",
     });
   }
