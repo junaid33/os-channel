@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "graphql-request": "^4.3.0",
     "next": "10.0.7",
     "nodemailer": "^6.4.18",
     "react": "17.0.1",
