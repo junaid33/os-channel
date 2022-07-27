@@ -54,8 +54,8 @@ export default async (req, res) => {
       host: "smtp.ethereal.email",
       port: 587,
       auth: {
-        user: "lexus31@ethereal.email",
-        pass: "2S2R8P29bTFQr2K2kY",
+        user: "marcellus.gutmann@ethereal.email",
+        pass: "KXWMwWjS3nXBd7xYyM",
       },
     });
     const orderEmail = await transport.sendMail({
@@ -68,7 +68,8 @@ export default async (req, res) => {
       purchaseId: newOrderId,
       url: getTestMessageUrl(orderEmail),
     });
-  } catch {
+  } catch (err) {
+    console.log({ err });
     return res.status(400).json({
       error: "Order creation failed.",
     });
